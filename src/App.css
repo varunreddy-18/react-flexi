@@ -73,17 +73,49 @@ body {
   text-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
+.addBlogButton {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 1000;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+  font-size: 36px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, box-shadow 0.2s;
+  outline: none;
+}
+.addBlogButton:focus {
+  box-shadow: 0 0 0 4px #80bdff, 0 4px 24px rgba(0,0,0,0.18);
+  background: #0056b3;
+}
+.addBlogButton:hover {
+  background: #0056b3;
+}
 @media (max-width: 768px) {
-  .header {
-    padding: 18px 0 10px 0;
-    margin-bottom: 18px;
-    border-bottom-left-radius: 18px;
-    border-bottom-right-radius: 18px;
+  .addBlogButton {
+    width: 48px;
+    height: 48px;
+    font-size: 28px;
+    bottom: 16px;
+    right: 16px;
   }
-  .headerTitle {
-    font-size: 2rem;
-  }
-  .headerSubtitle {
-    font-size: 1rem;
+}
+@media (min-width: 769px) and (max-width: 1199px) {
+  .addBlogButton {
+    width: 56px;
+    height: 56px;
+    font-size: 32px;
+    bottom: 24px;
+    right: 24px;
   }
 }
