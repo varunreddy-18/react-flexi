@@ -20,6 +20,13 @@ const initialPosts = [
 		author: 'John Smith',
 		date: '2024-05-10',
 	},
+	{
+		id: 'specs',
+		title: 'Blog Post Viewing Feature Specifications',
+		content: `<p>This post describes the <strong>specifications</strong> for the Blog Post Viewing Feature. <a href='/post/specs'>Click here to view the full requirements and UI/UX details.</a></p><ul><li>Content display</li><li>Responsiveness</li><li>Accessibility</li><li>Styling</li></ul>`,
+		author: 'Product Team',
+		date: '2025-06-12',
+	},
 ];
 
 function App() {
@@ -79,6 +86,36 @@ function App() {
 					<Route path="/new" element={<BlogPostForm onSubmit={handleCreate} />} />
 					<Route path="/edit/:id" element={<EditWrapper posts={posts} onEdit={handleEdit} />} />
 				</Routes>
+				{/* Floating Add Button as per specifications */}
+				<button
+					onClick={() => navigate('/new')}
+					className="addBlogButton"
+					title="Add New Blog Post"
+					aria-label="Add New Blog Post"
+					style={{
+						position: 'fixed',
+						bottom: 32,
+						right: 32,
+						zIndex: 1000,
+						background: '#007BFF',
+						color: '#fff',
+						border: 'none',
+						borderRadius: '50%',
+						width: 64,
+						height: 64,
+						boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
+						fontSize: 36,
+						fontWeight: 'bold',
+						cursor: 'pointer',
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						transition: 'background 0.2s, box-shadow 0.2s',
+					}}
+					onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/new'); } }}
+				>
+					<span aria-hidden="true" style={{fontSize: 40, lineHeight: 1, marginTop: -2}}>+</span>
+				</button>
 			</main>
 		</>
 	);
