@@ -49,6 +49,11 @@ function App() {
 		navigate(`/post/${id}`);
 	};
 
+	// Delete post
+	const handleDelete = async (id) => {
+		setPosts(posts.filter((post) => post.id !== id));
+	};
+
 	// Find post by id
 	const findPost = (id) => posts.find((post) => post.id === id);
 
@@ -81,7 +86,7 @@ function App() {
 					/>
 					<Route
 						path="/post/:id"
-						element={<BlogPostPage posts={posts} cardMode={false} onEdit={(id) => navigate(`/edit/${id}`)} />}
+						element={<BlogPostPage posts={posts} cardMode={false} onEdit={(id) => navigate(`/edit/${id}`)} onDelete={handleDelete} />}
 					/>
 					<Route path="/new" element={<BlogPostForm onSubmit={handleCreate} />} />
 					<Route path="/edit/:id" element={<EditWrapper posts={posts} onEdit={handleEdit} />} />
