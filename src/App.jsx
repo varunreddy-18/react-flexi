@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useNavigate, Link, useParams } 
 import BlogPostList from './BlogPostList.jsx';
 import BlogPostPage from '../pages/BlogPostPage.jsx';
 import BlogPostForm from '../components/BlogPostForm.jsx';
+import Layout from '../components/Layout.jsx';
 import './App.css';
 
 const initialPosts = [
@@ -58,71 +59,50 @@ function App() {
 	const findPost = (id) => posts.find((post) => post.id === id);
 
 	return (
-		<>
-			<header className="header">
-				<h1 className="headerTitle">Flexi Blog</h1>
-				<p className="headerSubtitle">A modern, responsive blog built with React & Vite</p>
-				<div style={{ textAlign: 'right', margin: '16px 0' }}>
-					<Link
-						to="/new"
-						style={{
-							background: '#007BFF',
-							color: '#fff',
-							padding: '8px 16px',
-							borderRadius: '4px',
-							textDecoration: 'none',
-							fontWeight: 'bold',
-						}}
-					>
-						+ Create New Post
-					</Link>
-				</div>
-			</header>
-			<main style={{ background: '#f5f6fa', minHeight: '100vh', padding: 0 }}>
-				<Routes>
-					<Route
-						path="/"
-						element={<BlogPostList posts={posts} cardMode={true} onEdit={(id) => navigate(`/edit/${id}`)} />}
-					/>
-					<Route
-						path="/post/:id"
-						element={<BlogPostPage posts={posts} cardMode={false} onEdit={(id) => navigate(`/edit/${id}`)} onDelete={handleDelete} />}
-					/>
-					<Route path="/new" element={<BlogPostForm onSubmit={handleCreate} />} />
-					<Route path="/edit/:id" element={<EditWrapper posts={posts} onEdit={handleEdit} />} />
-				</Routes>
-				{/* Floating Add Button as per specifications */}
-				<button
-					onClick={() => navigate('/new')}
-					className="addBlogButton"
-					title="Add New Blog Post"
-					aria-label="Add New Blog Post"
-					style={{
-						position: 'fixed',
-						bottom: 32,
-						right: 32,
-						zIndex: 1000,
-						background: '#007BFF',
-						color: '#fff',
-						border: 'none',
-						borderRadius: '50%',
-						width: 64,
-						height: 64,
-						boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
-						fontSize: 36,
-						fontWeight: 'bold',
-						cursor: 'pointer',
-						display: 'flex',
-						alignItems: 'center',
-						justifyContent: 'center',
-						transition: 'background 0.2s, box-shadow 0.2s',
-					}}
-					onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/new'); } }}
-				>
-					<span aria-hidden="true" style={{fontSize: 40, lineHeight: 1, marginTop: -2}}>+</span>
-				</button>
-			</main>
-		</>
+		<Layout>
+			<Routes>
+				<Route
+					path="/"
+					element={<BlogPostList posts={posts} cardMode={true} onEdit={(id) => navigate(`/edit/${id}`)} />}
+				/>
+				<Route
+					path="/post/:id"
+					element={<BlogPostPage posts={posts} cardMode={false} onEdit={(id) => navigate(`/edit/${id}`)} onDelete={handleDelete} />}
+				/>
+				<Route path="/new" element={<BlogPostForm onSubmit={handleCreate} />} />
+				<Route path="/edit/:id" element={<EditWrapper posts={posts} onEdit={handleEdit} />} />
+			</Routes>
+			{/* Floating Add Button as per specifications */}
+			<button
+				onClick={() => navigate('/new')}
+				className="addBlogButton"
+				title="Add New Blog Post"
+				aria-label="Add New Blog Post"
+				style={{
+					position: 'fixed',
+					bottom: 32,
+					right: 32,
+					zIndex: 1000,
+					background: '#007BFF',
+					color: '#fff',
+					border: 'none',
+					borderRadius: '50%',
+					width: 64,
+					height: 64,
+					boxShadow: '0 4px 24px rgba(0,0,0,0.18)',
+					fontSize: 36,
+					fontWeight: 'bold',
+					cursor: 'pointer',
+					display: 'flex',
+					alignItems: 'center',
+					justifyContent: 'center',
+					transition: 'background 0.2s, box-shadow 0.2s',
+				}}
+				onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate('/new'); } }}
+			>
+				<span aria-hidden="true" style={{fontSize: 40, lineHeight: 1, marginTop: -2}}>+</span>
+			</button>
+		</Layout>
 	);
 }
 
