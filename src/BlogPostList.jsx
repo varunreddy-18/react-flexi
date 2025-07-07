@@ -2,7 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from './BlogPostList.module.css';
 
-const BlogPostList = ({ posts, cardMode, onEdit }) => {
+function highlight(text, query) {
+  if (!query) return text;
+  const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.split(regex).map((part, i) =>
+    regex.test(part) ? <mark key={i} style={{background:'#fff59d',padding:0}}>{part}</mark> : part
+  );
+}
+
+const BlogPostList = ({ posts, cardMode, onEdit, searchQuery }) => {
   if (!posts || posts.length === 0) {
     return <div className={styles.empty}>No blog posts found.</div>;
   }
@@ -14,11 +22,11 @@ const BlogPostList = ({ posts, cardMode, onEdit }) => {
           <li key={post.id} className={styles.item}>
             <Link to={`/post/${post.id}`} className={styles.link}>
               <div className={cardMode ? styles.card : styles.cardPlain}>
-                <h2 className={styles.title}>{post.title}</h2>
+                <h2 className={styles.title}>{highlight(post.title, searchQuery)}</h2>
                 <p className={styles.meta}>By {post.author} &middot; {new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</p>
                 <div className={styles.preview}>
                   {/* Optionally show a preview of content, e.g. first 100 chars */}
-                  {post.content.replace(/<[^>]+>/g, '').slice(0, 100)}{post.content.replace(/<[^>]+>/g, '').length > 100 ? '...' : ''}
+                  {highlight(post.content.replace(/<[^>]+>/g, '').slice(0, 100), searchQuery)}{post.content.replace(/<[^>]+>/g, '').length > 100 ? '...' : ''}
                 </div>
               </div>
             </Link>

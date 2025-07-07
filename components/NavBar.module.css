@@ -63,6 +63,11 @@
 .mobileMenu {
   display: none;
 }
+.searchWrapper {
+  margin-left: 24px;
+  display: flex;
+  align-items: center;
+}
 @media (max-width: 768px) {
   .links {
     display: none;
@@ -106,5 +111,10 @@
     color: #007BFF;
     outline: 2px solid #007BFF;
     outline-offset: 2px;
+  }
+  .searchWrapper {
+    margin-left: 0;
+    width: 100vw;
+    justify-content: flex-end;
   }
 }
