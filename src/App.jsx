@@ -4,6 +4,9 @@ import BlogPostList from './BlogPostList.jsx';
 import BlogPostPage from '../pages/BlogPostPage.jsx';
 import BlogPostForm from '../components/BlogPostForm.jsx';
 import Layout from '../components/Layout.jsx';
+import NavBar from '../components/NavBar.jsx';
+import Blog from '../pages/Blog.jsx';
+import About from '../pages/About.jsx';
 import './App.css';
 
 const initialPosts = [
@@ -32,6 +35,7 @@ const initialPosts = [
 
 function App() {
 	const [posts, setPosts] = useState(initialPosts);
+	const [searchQuery, setSearchQuery] = useState('');
 	const navigate = useNavigate();
 
 	// Create new post
@@ -58,13 +62,24 @@ function App() {
 	// Find post by id
 	const findPost = (id) => posts.find((post) => post.id === id);
 
+	// Search logic
+	const filteredPosts = searchQuery
+		? posts.filter(post =>
+			(post.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+			 post.content.toLowerCase().includes(searchQuery.toLowerCase()))
+		)
+		: posts;
+
 	return (
 		<Layout>
+			<NavBar onSearch={setSearchQuery} />
 			<Routes>
 				<Route
 					path="/"
-					element={<BlogPostList posts={posts} cardMode={true} onEdit={(id) => navigate(`/edit/${id}`)} />}
+					element={<BlogPostList posts={filteredPosts} cardMode={true} onEdit={(id) => navigate(`/edit/${id}`)} searchQuery={searchQuery} />}
 				/>
+				<Route path="/blog" element={<Blog />} />
+				<Route path="/about" element={<About />} />
 				<Route
 					path="/post/:id"
 					element={<BlogPostPage posts={posts} cardMode={false} onEdit={(id) => navigate(`/edit/${id}`)} onDelete={handleDelete} />}
