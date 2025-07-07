@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import BlogPostDetail from '../components/BlogPostDetail';
 import DeleteButton from '../components/DeleteButton';
 import ConfirmationDialog from '../components/ConfirmationDialog';
+import CommentList from '../components/CommentList';
+import CommentForm from '../components/CommentForm';
 
 const BlogPostPage = ({ posts, onEdit, onDelete }) => {
   const { id } = useParams();
@@ -10,6 +12,7 @@ const BlogPostPage = ({ posts, onEdit, onDelete }) => {
   const post = posts.find(p => p.id === id);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [comments, setComments] = useState([]);
 
   const handleDelete = async () => {
     setDeleting(true);
@@ -17,6 +20,10 @@ const BlogPostPage = ({ posts, onEdit, onDelete }) => {
     setDeleting(false);
     setDialogOpen(false);
     navigate('/');
+  };
+
+  const handleAddComment = (comment) => {
+    setComments(prev => [...prev, comment]);
   };
 
   return (
@@ -37,6 +44,12 @@ const BlogPostPage = ({ posts, onEdit, onDelete }) => {
         onConfirm={handleDelete}
         loading={deleting}
       />
+      {/* Comment System */}
+      <section aria-label="Comments" style={{maxWidth:800,margin:'0 auto'}}>
+        <h2 style={{fontSize:'1.5rem',margin:'32px 0 16px 0',color:'#003366'}}>Comments</h2>
+        <CommentList comments={comments} />
+        <CommentForm onSubmit={handleAddComment} isLoggedIn={false} />
+      </section>
     </div>
   );
 };
